@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StrideX – Premium Sneakers</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#1f232c; --text:#f2f4f8; --muted:#9aa3b2;
+    --accent:#ff5a3c; --accent2:#ffb347; --line:#2a2f3a; --ok:#2ecc71;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .container{width:min(1180px,92%);margin:auto}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{font-size:1.6rem;font-weight:800;letter-spacing:-1px}
+  .logo span{color:var(--accent)}
+  .links{display:flex;gap:30px;font-size:.95rem;color:var(--muted)}
+  .links a:hover{color:var(--text)}
+  .cart-btn{position:relative;background:var(--card);border:1px solid var(--line);color:var(--text);padding:9px 18px;border-radius:30px;cursor:pointer;font-size:.95rem;transition:.2s}
+  .cart-btn:hover{border-color:var(--accent)}
+  .badge{position:absolute;top:-8px;right:-6px;background:var(--accent);color:#fff;font-size:.72rem;font-weight:700;min-width:21px;height:21px;border-radius:50%;display:grid;place-items:center}
+
+  /* HERO */
+  .hero{padding:90px 0 70px;background:radial-gradient(900px 400px at 80% 20%,rgba(255,90,60,.22),transparent 60%),radial-gradient(700px 400px at 10% 90%,rgba(255,179,71,.12),transparent 60%)}
+  .hero .container{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+  .tag{display:inline-block;background:rgba(255,90,60,.15);color:var(--accent);padding:6px 14px;border-radius:30px;font-size:.82rem;font-weight:600;margin-bottom:18px}
+  .hero h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;letter-spacing:-2px;margin-bottom:18px}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);max-width:480px;margin-bottom:30px;font-size:1.05rem}
+  .btn{display:inline-block;background:linear-gradient(90deg,var(--accent),#ff7a3c);color:#fff;border:none;padding:14px 32px;border-radius:40px;font-weight:700;font-size:1rem;cursor:pointer;transition:.25s;box-shadow:0 10px 30px rgba(255,90,60,.35)}
+  .btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(255,90,60,.5)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;margin-left:12px;color:var(--text)}
+  .btn.ghost:hover{border-color:var(--accent);box-shadow:none}
+  .hero-art{height:380px;border-radius:30px;background:linear-gradient(135deg,#ff5a3c,#ffb347);display:grid;place-items:center;font-size:12rem;position:relative;box-shadow:0 30px 80px rgba(255,90,60,.3);transform:rotate(-3deg)}
+  .hero-art span{filter:drop-shadow(0 20px 20px rgba(0,0,0,.35));transform:rotate(-8deg)}
+  .stats{display:flex;gap:40px;margin-top:40px}
+  .stats b{font-size:1.6rem;display:block}
+  .stats small{color:var(--muted)}
+
+  /* FEATURES */
+  .features{padding:30px 0 10px}
+  .features .container{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .feat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;gap:14px;align-items:center}
+  .feat i{font-style:normal;font-size:1.8rem}
+  .feat b{display:block;font-size:.95rem}
+  .feat small{color:var(--muted)}
+
+  /* PRODUCTS */
+  section.shop{padding:70px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:20px;margin-bottom:34px}
+  .sec-head h2{font-size:2.2rem;letter-spacing:-1px}
+  .sec-head p{color:var(--muted)}
+  .filters{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{background:var(--card);border:1px solid var(--line);color:var(--muted);padding:8px 20px;border-radius:30px;cursor:pointer;font-size:.9rem;transition:.2s}
+  .chip:hover{color:var(--text)}
+  .chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+  .product{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:.3s;position:relative}
+  .product:hover{transform:translateY(-8px);border-color:rgba(255,90,60,.5);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+  .thumb{height:220px;display:grid;place-items:center;font-size:6.5rem;position:relative}
+  .thumb span{transition:.4s;filter:drop-shadow(0 14px 14px rgba(0,0,0,.35))}
+  .product:hover .thumb span{transform:scale(1.15) rotate(-8deg)}
+  .sale{position:absolute;top:14px;left:14px;background:#000;color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px}
+  .info{padding:20px}
+  .cat{color:var(--accent);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+  .info h3{font-size:1.1rem;margin:4px 0 6px}
+  .stars{color:var(--accent2);font-size:.85rem}
+  .stars small{color:var(--muted)}
+  .row{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+  .price{font-size:1.25rem;font-weight:800}
+  .price del{font-size:.85rem;color:var(--muted);font-weight:400;margin-left:6px}
+  .add{background:var(--card2);border:1px solid var(--line);color:var(--text);width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;transition:.2s}
+  .add:hover{background:var(--accent);border-color:var(--accent);transform:rotate(90deg)}
+
+  /* BANNER */
+  .promo{margin:0 0 70px}
+  .promo .box{background:linear-gradient(120deg,#1d2230,#2a1b1b);border:1px solid var(--line);border-radius:30px;padding:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;position:relative;overflow:hidden}
+  .promo .box::after{content:"👟";position:absolute;right:40px;bottom:-30px;font-size:10rem;opacity:.12}
+  .promo h2{font-size:2.3rem;letter-spacing:-1px}
+  .promo p{color:var(--muted)}
+  .code{display:inline-block;border:2px dashed var(--accent);color:var(--accent);padding:6px 16px;border-radius:10px;font-weight:700;margin-top:10px;letter-spacing:2px}
+
+  /* REVIEWS */
+  .reviews{padding-bottom:80px}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+  .rev{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+  .rev p{color:var(--muted);margin:10px 0 16px;font-size:.95rem}
+  .who{display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem}
+  .who i{font-style:normal;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center}
+
+  /* NEWSLETTER + FOOTER */
+  .news{background:var(--card);border-top:1px solid var(--line);padding:60px 0;text-align:center}
+  .news h2{font-size:1.9rem;margin-bottom:8px}
+  .news p{color:var(--muted);margin-bottom:22px}
+  .news form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .news input{background:var(--bg);border:1px solid var(--line);color:var(--text);padding:14px 22px;border-radius:40px;width:min(340px,100%);font-size:1rem;outline:none}
+  .news input:focus{border-color:var(--accent)}
+  footer{background:#0a0b0e;padding:50px 0 24px;border-top:1px solid var(--line)}
+  .foot{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px}
+  .foot h4{margin-bottom:14px}
+  .foot a,.foot p{color:var(--muted);font-size:.92rem;display:block;margin-bottom:8px}
+  .foot a:hover{color:var(--accent)}
+  .copy{text-align:center;color:var(--muted);font-size:.85rem;margin-top:36px;padding-top:20px;border-top:1px solid var(--line)}
+
+  /* CART DRAWER */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.3s;z-index:90}
+  .overlay.show{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:-440px;width:min(420px,100%);height:100%;background:var(--card);z-index:100;transition:.35s;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+  .drawer.show{right:0}
+  .d-head{padding:22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+  .d-head h3{font-size:1.3rem}
+  .close{background:none;border:none;color:var(--text);font-size:1.6rem;cursor:pointer}
+  .items{flex:1;overflow:auto;padding:18px 22px}
+  .empty{text-align:center;color:var(--muted);margin-top:80px}
+  .empty b{font-size:3.5rem;display:block}
+  .ci{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+  .ci .pic{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;font-size:2.2rem}
+  .ci .d{flex:1}
+  .ci .d b{font-size:.95rem;display:block}
+  .ci .d small{color:var(--muted)}
+  .qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .qty button{width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--text);cursor:pointer}
+  .qty button:hover{border-color:var(--accent)}
+  .rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem}
+  .rm:hover{color:var(--accent)}
+  .d-foot{padding:22px;border-top:1px solid var(--line)}
+  .tot{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:700;margin-bottom:6px}
+  .d-foot small{color:var(--muted);display:block;margin-bottom:16px}
+  .d-foot .btn{width:100%}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,120px);background:var(--ok);color:#fff;padding:12px 26px;border-radius:40px;font-weight:600;z-index:200;transition:.4s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .toast.show{transform:translate(-50%,0)}
+
+  @media(max-width:900px){
+    .hero .container{grid-template-columns:1fr}
+    .hero-art{height:260px;font-size:8rem}
+    .features .container{grid-template-columns:1fr 1fr}
+    .rev-grid{grid-template-columns:1fr}
+    .foot{grid-template-columns:1fr 1fr}
+    .links{display:none}
+    .promo .box{padding:36px}
+  }
+
+  /* AI SNEAKER STYLIST */
+  .ai-stylist{padding:65px 0;background:radial-gradient(700px 300px at 85% 15%,rgba(255,90,60,.12),transparent 65%)}
+  .ai-panel{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:clamp(22px,4vw,38px);display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .ai-panel h2{font-size:clamp(1.7rem,3vw,2.3rem);letter-spacing:-1px;margin-bottom:8px}
+  .ai-panel p{color:var(--muted);margin-bottom:20px}
+  .ai-tag{display:inline-block;color:var(--accent);background:rgba(255,90,60,.13);padding:5px 12px;border-radius:30px;font-size:.8rem;font-weight:700;margin-bottom:12px}
+  .ai-form{display:grid;gap:14px}
+  .ai-form label{display:grid;gap:7px;font-size:.9rem;font-weight:600}
+  .ai-form select,.ai-form input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
+  .ai-form select:focus,.ai-form input:focus{outline:1px solid var(--accent);border-color:var(--accent)}
+  .ai-result{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:22px;min-height:220px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .ai-result h3{margin-bottom:10px}
+  .ai-result p{margin:0;color:var(--muted)}
+  .ai-status{font-size:.9rem;color:var(--muted);margin-top:10px;min-height:24px}
+  .ai-status.error{color:#ff8d7b}
+  @media(max-width:760px){.ai-panel{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="container">
+    <a href="#" class="logo">Stride<span>X</span></a>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#offers">Offers</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#ai-stylist">AI Stylist</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="badge" id="count">0</span></button>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="container">
+    <div>
+      <span class="tag">🔥 New Collection 2026</span>
+      <h1>Walk Bold.<br>Run <em>Faster.</em></h1>
+      <p>Premium sneakers jo style aur comfort dono dein. Free delivery poore Pakistan mein, aur 7 din easy return.</p>
+      <a href="#shop" class="btn">Shop Now</a>
+      <a href="#offers" class="btn ghost">View Offers</a>
+      <div class="stats">
+        <div><b>25K+</b><small>Happy Customers</small></div>
+        <div><b>150+</b><small>Designs</small></div>
+        <div><b>4.9★</b><small>Average Rating</small></div>
+      </div>
+    </div>
+    <div class="hero-art"><span>👟</span></div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="feat"><i>🚚</i><div><b>Free Delivery</b><small>Orders above Rs. 10,000</small></div></div>
+    <div class="feat"><i>🔄</i><div><b>7 Day Return</b><small>Easy exchange policy</small></div></div>
+    <div class="feat"><i>🔒</i><div><b>Secure Payment</b><small>COD &amp; Online</small></div></div>
+    <div class="feat"><i>✅</i><div><b>100% Original</b><small>Quality guaranteed</small></div></div>
+  </div>
+</section>
+
+
+<section class="ai-stylist" id="ai-stylist">
+  <div class="container">
+    <div class="ai-panel">
+      <div>
+        <span class="ai-tag">✨ AI-POWERED</span>
+        <h2>Meet Your AI Sneaker Stylist</h2>
+        <p>Apna budget aur shoe purpose select karein. AI aapko StrideX collection se suitable options recommend karega.</p>
+        <form class="ai-form" id="aiForm">
+          <label>Purpose
+            <select id="aiPurpose" required>
+              <option value="Running">Running</option>
+              <option value="Casual">Daily casual wear</option>
+              <option value="Sports">Sports</option>
+              <option value="Kids">Kids</option>
+            </select>
+          </label>
+          <label>Maximum budget (PKR)
+            <input id="aiBudget" type="number" min="1000" max="1000000" step="500" value="15000" required>
+          </label>
+          <label>Preferred colour
+            <select id="aiColor">
+              <option value="Any">Any colour</option>
+              <option value="Black">Black</option>
+              <option value="White">White</option>
+              <option value="Red">Red</option>
+              <option value="Blue">Blue</option>
+              <option value="Neutral">Neutral colours</option>
+            </select>
+          </label>
+          <label>Extra preference (optional)
+            <input id="aiPreference" type="text" maxlength="180" placeholder="e.g. lightweight, comfortable">
+          </label>
+          <button class="btn" id="aiSubmit" type="submit">✨ Get AI Recommendation</button>
+        </form>
+        <div class="ai-status" id="aiStatus" role="status" aria-live="polite"></div>
+      </div>
+      <div class="ai-result" id="aiResult" aria-live="polite">
+        <h3>Your recommendation will appear here</h3>
+        <p>Purpose aur budget choose karke button press karein.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shop" id="shop">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <h2>Our Collection</h2>
+        <p>Apni pasand ka pair chunein</p>
+      </div>
+      <div class="filters" id="filters">
+        <button class="chip active" data-cat="all">All</button>
+        <button class="chip" data-cat="Running">Running</button>
+        <button class="chip" data-cat="Casual">Casual</button>
+        <button class="chip" data-cat="Sports">Sports</button>
+        <button class="chip" data-cat="Kids">Kids</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="promo" id="offers">
+  <div class="container">
+    <div class="box">
+      <div>
+        <h2>Winter Sale – Flat 20% OFF</h2>
+        <p>Checkout par yeh code use karein aur bachat karein.</p>
+        <span class="code">STRIDE20</span>
+      </div>
+      <a href="#shop" class="btn">Grab the Deal</a>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="sec-head" style="margin-bottom:0">
+      <div><h2>What Customers Say</h2><p>Hamare customers ka experience</p></div>
+    </div>
+    <div class="rev-grid">
+      <div class="rev"><div class="stars">★★★★★</div><p>"Bohat comfortable shoes hain, 2 mahine se daily use kar raha hoon. Quality ekdum top!"</p><div class="who"><i>A</i>Ahmed Raza, Karachi</div></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"Delivery sirf 3 din mein ho gayi aur packaging bhi bohat achi thi. Highly recommended."</p><div class="who"><i>S</i>Sana Khan, Lahore</div></div>
+      <div class="rev"><div class="stars">★★★★☆</div><p>"Design bohat stylish hai, sab pooch rahe hain kahan se liye. Price bhi reasonable."</p><div class="who"><i>B</i>Bilal Shaikh, Hyderabad</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="news" id="contact">
+  <div class="container">
+    <h2>Join the StrideX Club</h2>
+    <p>Naye arrivals aur exclusive offers sab se pehle paayein.</p>
+    <form onsubmit="event.preventDefault();toast('Subscribed successfully! 🎉');this.reset()">
+      <input type="email" placeholder="Apna email likhein" required>
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot">
+      <div>
+        <div class="logo" style="margin-bottom:12px">Stride<span>X</span></div>
+        <p>Premium sneakers for every step of your journey.</p>
+      </div>
+      <div><h4>Shop</h4><a href="#shop">Running</a><a href="#shop">Casual</a><a href="#shop">Sports</a><a href="#shop">Kids</a></div>
+      <div><h4>Support</h4><a href="#">Track Order</a><a href="#">Returns</a><a href="#">Size Guide</a><a href="#">FAQs</a></div>
+      <div><h4>Contact</h4><p>📍 Hyderabad, Sindh</p><p>📞 +92 300 1234567</p><p>✉️ hello@stridex.pk</p></div>
+    </div>
+    <div class="copy">© 2026 StrideX. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Cart -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<aside class="drawer" id="drawer">
+  <div class="d-head"><h3>Your Cart</h3><button class="close" onclick="toggleCart()">×</button></div>
+  <div class="items" id="items"></div>
+  <div class="d-foot">
+    <div class="tot"><span>Total</span><span id="total">Rs. 0</span></div>
+    <small>Delivery charges checkout par calculate honge.</small>
+    <button class="btn" onclick="checkout()">Checkout</button>
+  </div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+  const products = [
+    {id:1, name:"AeroRun Pro",     cat:"Running", price:12999, old:15999, emoji:"👟", bg:"linear-gradient(135deg,#ff5a3c,#ff9a5a)", rating:4.8, rev:124, sale:true},
+    {id:2, name:"Urban Classic",   cat:"Casual",  price:8499,  old:null,  emoji:"👞", bg:"linear-gradient(135deg,#3a7bd5,#00d2ff)", rating:4.6, rev:98},
+    {id:3, name:"Velocity Sprint", cat:"Sports",  price:14999, old:17999, emoji:"⚡", bg:"linear-gradient(135deg,#8e2de2,#c471ed)", rating:4.9, rev:210, sale:true},
+    {id:4, name:"Little Stepper",  cat:"Kids",    price:4999,  old:null,  emoji:"🧒", bg:"linear-gradient(135deg,#f7971e,#ffd200)", rating:4.7, rev:76},
+    {id:5, name:"Cloud Walker",    cat:"Casual",  price:9999,  old:11999, emoji:"☁️", bg:"linear-gradient(135deg,#43cea2,#185a9d)", rating:4.5, rev:143, sale:true},
+    {id:6, name:"Trail Blazer",    cat:"Running", price:13499, old:null,  emoji:"🥾", bg:"linear-gradient(135deg,#11998e,#38ef7d)", rating:4.8, rev:89},
+    {id:7, name:"Court King",      cat:"Sports",  price:11999, old:null,  emoji:"🏀", bg:"linear-gradient(135deg,#ee0979,#ff6a00)", rating:4.4, rev:61},
+    {id:8, name:"Mini Racer",      cat:"Kids",    price:5499,  old:6999,  emoji:"🚀", bg:"linear-gradient(135deg,#00c6ff,#0072ff)", rating:4.6, rev:54, sale:true}
+  ];
+
+  let cart = JSON.parse(localStorage.getItem("stridex_cart") || "[]");
+  const fmt = n => "Rs. " + n.toLocaleString("en-PK");
+
+  function renderProducts(cat="all"){
+    const list = cat==="all" ? products : products.filter(p=>p.cat===cat);
+    document.getElementById("grid").innerHTML = list.map(p=>`
+      <div class="product">
+        <div class="thumb" style="background:${p.bg}">
+          ${p.sale?'<div class="sale">SALE</div>':''}
+          <span>${p.emoji}</span>
+        </div>
+        <div class="info">
+          <div class="cat">${p.cat}</div>
+          <h3>${p.name}</h3>
+          <div class="stars">${"★".repeat(Math.round(p.rating))}${"☆".repeat(5-Math.round(p.rating))} <small>(${p.rev})</small></div>
+          <div class="row">
+            <div class="price">${fmt(p.price)}${p.old?`<del>${fmt(p.old)}</del>`:''}</div>
+            <button class="add" onclick="addToCart(${p.id})" aria-label="Add to cart">+</button>
+          </div>
+        </div>
+      </div>`).join("");
+  }
+
+  document.getElementById("filters").addEventListener("click", e=>{
+    if(!e.target.classList.contains("chip")) return;
+    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+    e.target.classList.add("active");
+    renderProducts(e.target.dataset.cat);
+  });
+
+  function save(){ localStorage.setItem("stridex_cart", JSON.stringify(cart)); renderCart(); }
+
+  function addToCart(id){
+    const item = cart.find(i=>i.id===id);
+    item ? item.qty++ : cart.push({id, qty:1});
+    save();
+    toast(products.find(p=>p.id===id).name + " cart mein add ho gaya ✓");
+  }
+  function changeQty(id, d){
+    const item = cart.find(i=>i.id===id);
+    item.qty += d;
+    if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
+    save();
+  }
+  function removeItem(id){ cart = cart.filter(i=>i.id!==id); save(); }
+
+  function renderCart(){
+    const box = document.getElementById("items");
+    if(!cart.length){
+      box.innerHTML = '<div class="empty"><b>🛒</b>Aapka cart khali hai</div>';
+    } else {
+      box.innerHTML = cart.map(i=>{
+        const p = products.find(x=>x.id===i.id);
+        return `<div class="ci">
+          <div class="pic" style="background:${p.bg}">${p.emoji}</div>
+          <div class="d"><b>${p.name}</b><small>${fmt(p.price)}</small>
+            <div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><span>${i.qty}</span><button onclick="changeQty(${p.id},1)">+</button></div>
+          </div>
+          <button class="rm" onclick="removeItem(${p.id})" aria-label="Remove">🗑</button>
+        </div>`;
+      }).join("");
+    }
+    const total = cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0);
+    document.getElementById("total").textContent = fmt(total);
+    document.getElementById("count").textContent = cart.reduce((s,i)=>s+i.qty,0);
+  }
+
+  function toggleCart(){
+    document.getElementById("drawer").classList.toggle("show");
+    document.getElementById("overlay").classList.toggle("show");
+  }
+  function checkout(){
+    if(!cart.length){ toast("Pehle kuch cart mein add karein"); return; }
+    cart = []; save(); toggleCart();
+    toast("Order place ho gaya! Shukriya 🎉");
+  }
+  let t;
+  function toast(msg){
+    const el = document.getElementById("toast");
+    el.textContent = msg; el.classList.add("show");
+    clearTimeout(t); t = setTimeout(()=>el.classList.remove("show"), 2200);
+  }
+
+
+  // AI Sneaker Stylist: set this to your deployed backend URL before publishing.
+  // Example: https://your-stridex-api.onrender.com
+  const AI_API_BASE_URL = const AI_API_BASE_URL = "http://localhost:3000";
+
+  document.getElementById("aiForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const status = document.getElementById("aiStatus");
+    const resultBox = document.getElementById("aiResult");
+    const submitButton = document.getElementById("aiSubmit");
+
+    const payload = {
+      purpose: document.getElementById("aiPurpose").value,
+      budget: Number(document.getElementById("aiBudget").value),
+      color: document.getElementById("aiColor").value,
+      preference: document.getElementById("aiPreference").value.trim()
+    };
+
+    if (!Number.isFinite(payload.budget) || payload.budget < 1000 || payload.budget > 1000000) {
+      status.textContent = "Budget Rs. 1,000 se Rs. 1,000,000 ke darmiyan enter karein.";
+      status.className = "ai-status error";
+      return;
+    }
+
+    if (AI_API_BASE_URL.includes("const AI_API_BASE_URL = "https://stridex-ai-backend.vercel.app";")) {
+      status.textContent = "Backend deploy karne ke baad AI_API_BASE_URL mein apna live URL add karein.";
+      status.className = "ai-status error";
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "AI soch raha hai...";
+    status.className = "ai-status";
+    status.textContent = "Aapki preferences ke mutabiq recommendation ban rahi hai...";
+    resultBox.textContent = "Please wait...";
+
+    try {
+      const response = await fetch(`${AI_API_BASE_URL}/api/recommend`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "Recommendation request fail ho gayi.");
+      resultBox.textContent = data.recommendation || "AI ne recommendation return nahi ki.";
+      status.textContent = "Recommendation ready ✓";
+    } catch (error) {
+      resultBox.textContent = "Recommendation abhi nahi mil saki.";
+      status.textContent = error.message || "Network error. Backend URL aur deployment check karein.";
+      status.className = "ai-status error";
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "✨ Get AI Recommendation";
+    }
+  });
+
+  renderProducts();
+  renderCart();
+</script>
+</body>
+</html>
